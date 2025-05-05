@@ -24,4 +24,8 @@ public class Vehicle {
 
     @ElementCollection
     private List<String> imageUrls;  // Store image URLs
+
+    public void setId(Long id) {
+
+    }
 }
