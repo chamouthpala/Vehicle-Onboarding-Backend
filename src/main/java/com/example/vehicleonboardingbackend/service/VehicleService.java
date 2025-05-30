@@ -31,7 +31,6 @@ public class VehicleService {
         Vehicle existingVehicle = vehicleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vehicle not found"));
 
-        // Update fields manually (avoid overwriting critical fields accidentally)
         existingVehicle.setMake(vehicle.getMake());
         existingVehicle.setModel(vehicle.getModel());
         existingVehicle.setYear(vehicle.getYear());

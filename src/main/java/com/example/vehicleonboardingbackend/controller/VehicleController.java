@@ -52,17 +52,6 @@ public class VehicleController {
         vehicleService.deleteVehicle(id);
     }
 
-//    @GetMapping("/test")
-//    public ResponseEntity<String> test() {
-//        return ResponseEntity.ok("Vehicle API is up and running!");
-//    }
-//
-//
-//    @PostMapping("/upload-test")
-//    public ResponseEntity<String> uploadTest(@RequestParam("file") MultipartFile file) {
-//        return ResponseEntity.ok("File received: " + file.getOriginalFilename());
-//    }
-
 
     @PostMapping("/upload")
     public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
