@@ -28,8 +28,19 @@ public class VehicleService {
     }
 
     public Vehicle updateVehicle(Long id, Vehicle vehicle) {
-        vehicle.setId(id);
-        return vehicleRepository.save(vehicle);
+        Vehicle existingVehicle = vehicleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Vehicle not found"));
+
+        // Update fields manually (avoid overwriting critical fields accidentally)
+        existingVehicle.setMake(vehicle.getMake());
+        existingVehicle.setModel(vehicle.getModel());
+        existingVehicle.setYear(vehicle.getYear());
+        existingVehicle.setRegnum(vehicle.getRegnum());
+        existingVehicle.setVehicletype(vehicle.getVehicletype());
+        existingVehicle.setFuelType(vehicle.getFuelType());
+        existingVehicle.setImageUrls(vehicle.getImageUrls());
+
+        return vehicleRepository.save(existingVehicle);
     }
 
     public void deleteVehicle(Long id) {

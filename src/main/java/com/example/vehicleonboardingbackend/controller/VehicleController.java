@@ -52,20 +52,20 @@ public class VehicleController {
         vehicleService.deleteVehicle(id);
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        return ResponseEntity.ok("Vehicle API is up and running!");
-    }
-
-
-    @PostMapping("/upload-test")
-    public ResponseEntity<String> uploadTest(@RequestParam("file") MultipartFile file) {
-        return ResponseEntity.ok("File received: " + file.getOriginalFilename());
-    }
+//    @GetMapping("/test")
+//    public ResponseEntity<String> test() {
+//        return ResponseEntity.ok("Vehicle API is up and running!");
+//    }
+//
+//
+//    @PostMapping("/upload-test")
+//    public ResponseEntity<String> uploadTest(@RequestParam("file") MultipartFile file) {
+//        return ResponseEntity.ok("File received: " + file.getOriginalFilename());
+//    }
 
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
         if (file.isEmpty()) {
             return ResponseEntity.badRequest().body("File is empty");
         }
@@ -80,7 +80,7 @@ public class VehicleController {
         System.out.println("Uploading to path: " + filePath);
         file.transferTo(new File(filePath));
 
-        String fileUrl = "http://localhost:8080/uploads/" + fileName;
+        String fileUrl = "http://172.104.60.219:8080/uploads/" + fileName;
         return ResponseEntity.ok(fileUrl);
     }
 }
