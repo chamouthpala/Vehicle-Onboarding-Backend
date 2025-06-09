@@ -53,23 +53,40 @@ public class VehicleController {
     }
 
 
-    @PostMapping("/upload")
-    public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+    @PostMapping("/uploadVehicleData")
+    public ResponseEntity<?> uploadVehicleData(
+            @RequestParam("images") MultipartFile file,
+            @RequestParam("model") String model,
+            @RequestParam("vehicleNumber") String regnum
+    ) throws IOException {
+
         if (file.isEmpty()) {
             return ResponseEntity.badRequest().body("File is empty");
         }
+
 
         File uploadDir = new File(UPLOAD_DIR);
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
         }
 
+
         String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
         String filePath = Paths.get(UPLOAD_DIR, fileName).toString();
-        System.out.println("Uploading to path: " + filePath);
         file.transferTo(new File(filePath));
 
-        String fileUrl = "http://172.104.60.219:8080/uploads/" + fileName;
-        return ResponseEntity.ok(fileUrl);
+
+        String fileUrl = "http://localhost:8080/uploads/" + fileName;
+
+
+        Vehicle vehicle = new Vehicle();
+        vehicle.setModel(model);
+        vehicle.setRegnum(regnum);
+        vehicle.setImageUrls(List.of(fileUrl));
+
+
+        Vehicle savedVehicle = vehicleService.saveVehicle(vehicle);
+
+        return ResponseEntity.ok(savedVehicle);
     }
 }
